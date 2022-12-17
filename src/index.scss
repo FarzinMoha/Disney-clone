@@ -1,0 +1,39 @@
+:root{
+    --background:#040714;
+    --white:#f9f9f9;
+    --blueBackground:#0063e5;
+    --blueBackgroundHover:#0483ee;
+    --navBackgroundHover:#090b13;
+
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+*{
+    box-sizing: border-box;
+}
+
+body{
+    background-color: var(--background);
+    color: var(--white);
+    font-family: Avenir-Roman, sans-serif;
+    margin: 0;
+    padding: 0;
+    @media screen and (min-width:769px) {
+        font-size: 16px;
+    }
+    @media screen and (min-width:480px) and (max-width:768px) {
+        font-size: 15px;
+    }
+    @media screen and (max-width:479px) {
+        font-size: 14px;
+    }
+}
+
+a{
+    text-decoration: none;
+    color: var(--white);
+}
+
