@@ -1,39 +1,79 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import {
+  selectUserName,
+  setUserLoginDetails,
+} from "../redux/user-slice/userSlice";
+
+import { auth, signInWithGooglePopup } from "../firebase/firebase";
+import SignOut from "./SignOut";
 
 const Navigation = (props) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userName = useSelector(selectUserName);
+  const setUser = (user) => {
+    dispatch(
+      setUserLoginDetails({
+        name: user.displayName,
+        email: user.email,
+        photo: user.photoURL,
+      })
+    );
+  };
+  const handleAuth = async () => {
+    const { user } = await signInWithGooglePopup();
+    setUser(user);
+  };
+  useEffect(() => {
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        setUser(user);
+        navigate("/home");
+      }
+    });
+  }, [userName]);
+
   return (
     <Nav>
       <Logo>
         <img src="/images/logo.svg" alt="disney+" />
       </Logo>
-      <NavMenu>
-        <a href="/">
-          <img src="/images/home-icon.svg" alt="home" />
-          <span>Home</span>
-        </a>
-        <a href="/">
-          <img src="/images/search-icon.svg" alt="home" />
-          <span>Search</span>
-        </a>
-        <a href="/">
-          <img src="/images/watchlist-icon.svg" alt="home" />
-          <span>watchlist</span>
-        </a>
-        <a href="/">
-          <img src="/images/home-icon.svg" alt="home" />
-          <span>orginals</span>
-        </a>
-        <a href="/">
-          <img src="/images/movie-icon.svg" alt="home" />
-          <span>moveis</span>
-        </a>
-        <a href="/">
-          <img src="/images/series-icon.svg" alt="home" />
-          <span>seies</span>
-        </a>
-      </NavMenu>
-      <Login>Login</Login>
+      {!userName ? (
+        <Login onClick={handleAuth}>LOGIN</Login>
+      ) : (
+        <>
+          <NavMenu>
+            <a href="/">
+              <img src="/images/home-icon.svg" alt="home" />
+              <span>Home</span>
+            </a>
+            <a href="/">
+              <img src="/images/search-icon.svg" alt="home" />
+              <span>Search</span>
+            </a>
+            <a href="/">
+              <img src="/images/watchlist-icon.svg" alt="home" />
+              <span>watchlist</span>
+            </a>
+            <a href="/">
+              <img src="/images/home-icon.svg" alt="home" />
+              <span>orginals</span>
+            </a>
+            <a href="/">
+              <img src="/images/movie-icon.svg" alt="home" />
+              <span>moveis</span>
+            </a>
+            <a href="/">
+              <img src="/images/series-icon.svg" alt="home" />
+              <span>seies</span>
+            </a>
+          </NavMenu>
+          <SignOut />
+        </>
+      )}
     </Nav>
   );
 };
@@ -125,20 +165,20 @@ const NavMenu = styled.div`
 `;
 
 const Login = styled.a`
-  background-color:rgb(0,0,0,0.6);
-  color:var(--white);
-  padding:8px 16px;
-  text-transform:uppercase;
-  letter-spacing:1.5px;
-  border:1px solid var(--white);
-  border-radius:4px;
+  background-color: rgb(0, 0, 0, 0.6);
+  color: var(--white);
+  padding: 8px 16px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  border: 1px solid var(--white);
+  border-radius: 4px;
   transition: all 0.2s ease 0s;
-  &:hover{
-      background-color:var(--white);
-      color:var(--background);
-      cursor:pointer;
-      border-color:transparent;
+  &:hover {
+    background-color: var(--white);
+    color: var(--background);
+    cursor: pointer;
+    border-color: transparent;
   }
-`
+`;
 
 export default Navigation;
