@@ -2,11 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const ItemOrginals = ({ src, to }) => {
+const ItemMovieCard = ({ id, cardImg, title }) => {
   return (
-    <Wrap>
-      <Link to={to}>
-        <img src={src} alt={src} />
+    <Wrap key={id}>
+      <Link to={`/detail/${id}`}>
+        <img src={cardImg} alt={title} />
       </Link>
     </Wrap>
   );
@@ -22,20 +22,20 @@ const Wrap = styled.div`
   position: relative;
   transition: all 250ms var(--transition) 0s;
   border: 3px solid var(--boxBorderDark);
-  img{
-    inset:0;
-    position:absolute;
-    display:block;
-    height:100%;
-    width:100%;
-    object-fit:cover;
-    opacity:1;
-    transition:var(--opacityTransition)
+  img {
+    inset: 0;
+    position: absolute;
+    display: block;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    opacity: 1;
+    transition: var(--opacityTransition);
   }
-  &:hover{
-    transform:scale(1.05);
-    border-color:var(--boxBorder);
+  &:hover {
+    transform: scale(1.05);
+    border-color: var(--boxBorder);
   }
 `;
 
-export default ItemOrginals;
+export default ItemMovieCard;

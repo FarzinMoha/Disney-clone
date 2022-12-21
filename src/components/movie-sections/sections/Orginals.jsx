@@ -1,16 +1,22 @@
 import React from "react";
 import styled from "styled-components";
-import ItemOrginals from "./ItemOrginals";
+import ItemMovieCard from "../ItemMovieCard";
+import { useSelector } from "react-redux";
+import { selectOriginal } from "../../../redux/movie-slice/movieSlice";
 
 const Orginals = () => {
+  const orginals = useSelector(selectOriginal);
   return (
     <Container>
       <h4>Orginals</h4>
       <Content>
-        <ItemOrginals to='/' src='/images/slider-badag.jpg'/>
-        <ItemOrginals to='/' src='/images/slider-badag.jpg'/>
-        <ItemOrginals to='/' src='/images/slider-badag.jpg'/>
-        <ItemOrginals to='/' src='/images/slider-badag.jpg'/>
+        {orginals &&
+          orginals.map((movie) => {
+            const { id, cardImg, title } = movie;
+            return (
+              <ItemMovieCard key={id} id={id} cardImg={cardImg} title={title} />
+            );
+          })}
       </Content>
     </Container>
   );

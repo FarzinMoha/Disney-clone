@@ -1,21 +1,24 @@
 import "./App.scss";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./components/Login";
+import { BrowserRouter, HashRouter, Routes, Route } from "react-router-dom";
+import Login from "./routes/Login";
 import Navigation from "./components/Navigation";
-import Home from "./components/routes/Home";
+import Home from "./routes/Home";
+import DetailsMoviePage from "./components/movie-sections/DetailsMoviePage";
 
-function App() {
+const App = () => {
   return (
     <div className="App">
-      <BrowserRouter>
-      <Navigation/>
+      <HashRouter>
         <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Navigation />}>
+            <Route index element={<Login />} />
+            <Route path="/disney-home" element={<Home />} />
+            {/* <Route path="/disney/detail/:id" element={<DetailsMoviePage />} /> */}
+          </Route>
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </div>
   );
-}
+};
 
 export default App;

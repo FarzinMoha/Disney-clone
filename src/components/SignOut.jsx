@@ -26,51 +26,6 @@ const SignOut = () => {
       }
     });
   }, [userName]);
-  const Signout = styled.div`
-    position: relative;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    img {
-      width: 90%;
-      height: 90%;
-      border-radius: 50%;
-      cursor: pointer;
-    }
-  `;
-
-  const DropeDown = styled.div`
-    position: absolute;
-    width: 150px;
-    height: 100px;
-    background: var(--white);
-    right: 2px;
-    bottom: -100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transform: scaleY(0);
-    opacity: 0;
-    transition: 1s;
-    &.show {
-      transition: 1s;
-      transform: scaleY(1);
-      opacity: 1;
-    }
-  `;
-
-  const Btn = styled.button`
-    width: 100px;
-    height: 50px;
-    border: 1px solid black;
-    background: var(--white);
-    border-radius: 4px;
-    cursor:pointer;
-  `;
 
   return (
     <Signout>
@@ -81,5 +36,51 @@ const SignOut = () => {
     </Signout>
   );
 };
+const Signout = styled.div`
+position: relative;
+width: 60px;
+height: 60px;
+border-radius: 50%;
+display: flex;
+justify-content: center;
+align-items: center;
+text-align: center;
+img {
+  width: 90%;
+  height: 90%;
+  border-radius: 50%;
+  cursor: pointer;
+}
+`;
+
+const DropeDown = styled.div`
+position: absolute;
+width: 150px;
+height: 100px;
+background: var(--white);
+right: 2px;
+bottom: -100px;
+display: flex;
+justify-content: center;
+align-items: center;
+transform: scaleY(0);
+opacity: 0;
+transition: .3s;
+transform-origin:top;
+&.show {
+  // transition: 1s;
+  transform: scaleY(1);
+  opacity: 1;
+}
+`;
+
+const Btn = styled.button`
+width: 100px;
+height: 50px;
+border: 1px solid black;
+background: var(--white);
+border-radius: 4px;
+cursor:pointer;
+`;
 
 export default SignOut;

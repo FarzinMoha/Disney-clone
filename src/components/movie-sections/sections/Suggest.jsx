@@ -1,16 +1,22 @@
 import React from "react";
 import styled from "styled-components";
-import ItemSuggest from "./ItemSuggest";
+import { useSelector } from "react-redux";
+import ItemMovieCard from "../ItemMovieCard";
+import { selectRecommend } from "../../../redux/movie-slice/movieSlice";
 
 const Suggest = () => {
+  const recommends = useSelector(selectRecommend);
   return (
     <Container>
       <h4>Recommended for you</h4>
       <Content>
-        <ItemSuggest to='/' src='/images/slider-badag.jpg'/>
-        <ItemSuggest to='/' src='/images/slider-badag.jpg'/>
-        <ItemSuggest to='/' src='/images/slider-badag.jpg'/>
-        <ItemSuggest to='/' src='/images/slider-badag.jpg'/>
+        {recommends &&
+          recommends.map((movie) => {
+            const { id, cardImg, title } = movie;
+            return (
+              <ItemMovieCard key={id} id={id} cardImg={cardImg} title={title} />
+            );
+          })}
       </Content>
     </Container>
   );

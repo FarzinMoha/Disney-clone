@@ -5,7 +5,7 @@ import {
   GoogleAuthProvider,
   signOut,
 } from "firebase/auth";
-import { doc, getFirestore } from "firebase/firestore";
+import { collection, getDocs, getFirestore, query } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDM3FqrSzWuv0Nq01qqpOMdPEjwxKr2YCs",
@@ -31,31 +31,40 @@ export const signOutUser = async () => await signOut(auth);
 
 export const db = getFirestore();
 
-// export const fetchData = (
-//   recommend = [],
-//   news = [],
-//   original = [],
-//   trending = []
-// ) => {
-//   db.collection("movies").onSnapshot((snapshot) => {
-//     snapshot.docs.map((doc) => {
-//       switch (doc.data().type) {
-//         case "recommend":
-//           recommend.push({ id: doc.id, ...doc });
-//           break;
-//         case "new":
-//           news.push({ id: doc.id, ...doc });
-//           break;
-//         case "recommend":
-//           recommend.push({ id: doc.id, ...doc });
-//           break;
-//         case "original":
-//           original.push({ id: doc.id, ...doc });
-//           break;
-//         case "trending":
-//           trending.push({ id: doc.id, ...doc });
-//           break;
-//       }
-//     });
-//   });
-// };
+export const getCategoriesAndDocuments = async () => {
+  const movie = {
+    recommend: [],
+    new: [],
+    original: [],
+    trending: [],
+  };
+  const collectionRef = collection(db, "movie");
+  const q = query(collectionRef);
+
+  const querySnapshot = await getDocs(q);
+  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+    const { type } = docSnapshot.data();
+    const prevState = movie[type];
+    prevState.push({ id: docSnapshot.id, ...docSnapshot.data() });
+    return movie;
+  }, {});
+
+  return categoryMap;
+};
+
+export const getMovie = async (idMovie) => {
+  const movie =[]
+  const collectionRef = collection(db, "movie");
+  const q = query(collectionRef);
+
+  const querySnapshot = await getDocs(q);
+  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+    const data = docSnapshot.data();
+    if (docSnapshot.id === idMovie) {
+      movie.push(data)
+    }
+    return movie;
+  }, {});
+
+  return categoryMap;
+};

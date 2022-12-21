@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Outlet } from "react-router-dom";
 import {
   selectUserName,
   setUserLoginDetails,
@@ -9,8 +9,15 @@ import {
 
 import { auth, signInWithGooglePopup } from "../firebase/firebase";
 import SignOut from "./SignOut";
+import logo from '../assets/images/logo.svg'
+import home from '../assets/images/home-icon.svg'
+import search from '../assets/images/search-icon.svg'
+import watchlist from '../assets/images/watchlist-icon.svg'
+import original from '../assets/images/original-icon.svg'
+import movie from '../assets/images/movie-icon.svg'
+import series from '../assets/images/series-icon.svg'
 
-const Navigation = (props) => {
+const Navigation = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userName = useSelector(selectUserName);
@@ -31,15 +38,16 @@ const Navigation = (props) => {
     auth.onAuthStateChanged(async (user) => {
       if (user) {
         setUser(user);
-        navigate("/home");
+        navigate("/disney-home");
       }
     });
   }, [userName]);
 
   return (
+    <>
     <Nav>
       <Logo>
-        <img src="/images/logo.svg" alt="disney+" />
+        <img src={logo} alt="disney+" />
       </Logo>
       {!userName ? (
         <Login onClick={handleAuth}>LOGIN</Login>
@@ -47,27 +55,27 @@ const Navigation = (props) => {
         <>
           <NavMenu>
             <a href="/">
-              <img src="/images/home-icon.svg" alt="home" />
+              <img src={home} alt="home" />
               <span>Home</span>
             </a>
             <a href="/">
-              <img src="/images/search-icon.svg" alt="home" />
+              <img src={search} alt="home" />
               <span>Search</span>
             </a>
             <a href="/">
-              <img src="/images/watchlist-icon.svg" alt="home" />
+              <img src={watchlist} alt="home" />
               <span>watchlist</span>
             </a>
             <a href="/">
-              <img src="/images/home-icon.svg" alt="home" />
+              <img src={original} alt="home" />
               <span>orginals</span>
             </a>
             <a href="/">
-              <img src="/images/movie-icon.svg" alt="home" />
-              <span>moveis</span>
+              <img src={movie} alt="home" />
+              <span>movies</span>
             </a>
             <a href="/">
-              <img src="/images/series-icon.svg" alt="home" />
+              <img src={series} alt="home" />
               <span>seies</span>
             </a>
           </NavMenu>
@@ -75,6 +83,8 @@ const Navigation = (props) => {
         </>
       )}
     </Nav>
+    <Outlet/>
+    </>
   );
 };
 

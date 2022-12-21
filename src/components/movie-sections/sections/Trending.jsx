@@ -1,16 +1,21 @@
 import React from "react";
 import styled from "styled-components";
-import ItemTrending from "./ItemTrending";
-
+import { useSelector } from "react-redux";
+import { selectTrending } from '../../../redux/movie-slice/movieSlice'
+import ItemMovieCard from "../ItemMovieCard";
 const Trending = () => {
+  const trendings = useSelector(selectTrending);
   return (
     <Container>
       <h4>Trending</h4>
       <Content>
-        <ItemTrending to='/' src='/images/slider-badag.jpg'/>
-        <ItemTrending to='/' src='/images/slider-badag.jpg'/>
-        <ItemTrending to='/' src='/images/slider-badag.jpg'/>
-        <ItemTrending to='/' src='/images/slider-badag.jpg'/>
+        {trendings &&
+          trendings.map((movie) => {
+            const { id, cardImg, title } = movie;
+            return (
+              <ItemMovieCard key={id} id={id} cardImg={cardImg} title={title} />
+            );
+          })}
       </Content>
     </Container>
   );
