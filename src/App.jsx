@@ -10,7 +10,7 @@ const App = () => {
     <div className="App">
       <HashRouter>
         <Routes>
-          <Route path="/Disney-clone" element={<Navigation />}>
+          <Route path="/" element={<Navigation />}>
             <Route index element={<Login />} />
             <Route path="/disney-home" element={<Home />} />
             {/* <Route path="/disney/detail/:id" element={<DetailsMoviePage />} /> */}
